@@ -1,9 +1,4 @@
-# Privacy in Networking
-
-Privacy in networks refers to **protecting user data, identity, and communication** from unauthorized access, misuse, or exposure. It varies depending on whether the communication medium is **wired** or **wireless**, and different **standards** define specific vulnerabilities and protections.
-
----
-
+# **Privacy in Networking (Technology → Standards)**
 ```mermaid
 mindmap
   root((Privacy in Networking))
@@ -14,156 +9,142 @@ mindmap
         Traffic Analysis
       Fiber Optics (ITU-T G.65x)
         Fiber Tapping
-        High-Value Target Risks
-      DSL / Cable Internet (ITU-T G.992.x, DOCSIS)
-        Shared Channel Leakage
+        High-Value Risks
+      DSL Broadband (ITU-T G.992.x)
+        Copper Tapping
+        ISP Monitoring
+      Cable Internet (DOCSIS)
+        Shared Medium Leakage
         ISP Surveillance
+      Leased Lines/MPLS (Carrier Standards)
+        Provider Dependence
+        Transit Interception
     Wireless Privacy
       Wi-Fi (IEEE 802.11)
         WEP (Weak, Crackable)
-        WPA/WPA2 (Improved, Brute-force risk)
-        WPA3 (Stronger protection)
-      Cellular Networks (3GPP Standards)
-        2G (Weak encryption, A5/1, A5/2 vulnerabilities)
-        3G (Stronger, Fake towers possible)
-        4G LTE (IP-based encryption, IMSI tracking risk)
-        5G (SUCI identity protection)
+        WPA/WPA2 (Brute-force risks)
+        WPA3 (SAE Authentication, Strongest)
+      Mobile Networks (3GPP)
+        2G (Weak encryption, IMSI leaks)
+        3G (Fake towers possible)
+        4G (IMSI tracking, IP-based encryption)
+        5G (SUCI, Strong identity protection)
       Bluetooth (IEEE 802.15.1)
         Bluejacking
         Bluesnarfing
-        Device Tracking (MAC exposure)
+        MAC Tracking
       Satellite Communication (ETSI, ITU)
         Uplink/Downlink Interception
         Weak Encryption Risks
 ```
 ---
 
-# Privacy in Networking
+## **1. Wired Privacy**
 
-## 1. Wired Privacy
-- **Ethernet (IEEE 802.3)**
-  - Data Leakage
-  - MAC Address Exposure
-  - Traffic Analysis
-- **Fiber Optics (ITU-T G.65x)**
-  - Fiber Tapping
-  - High-Value Target Risks
-- **DSL / Cable Internet (ITU-T G.992.x, DOCSIS)**
-  - Shared Channel Leakage
-  - ISP Surveillance
+### a) Ethernet (LAN) → *Standard: IEEE 802.3*
 
-## 2. Wireless Privacy
-- **Wi-Fi (IEEE 802.11)**
-  - WEP (weak, crackable)
-  - WPA/WPA2 (improved, brute-force risk)
-  - WPA3 (stronger protection)
-- **Cellular Networks (3GPP Standards)**
-  - 2G (weak encryption, A5/1, A5/2 vulnerabilities)
-  - 3G (stronger, but fake towers possible)
-  - 4G LTE (IP-based encryption, IMSI tracking risk)
-  - 5G (SUCI identity protection)
-- **Bluetooth (IEEE 802.15.1)**
-  - Bluejacking
-  - Bluesnarfing
-  - Device Tracking (MAC exposure)
-- **Satellite Communication (ETSI, ITU Standards)**
-  - Uplink/Downlink Interception
-  - Weak Encryption Risks
----
+* **Data Leakage**: LAN sniffing via compromised nodes.
+* **MAC Address Exposure**: Device identification & tracking.
+* **Traffic Analysis**: Metadata (who communicates with whom).
 
-## 1. **Wired Privacy**
+### b) Fiber Optics → *Standard: ITU-T G.65x*
 
-Wired communication uses **cables** (Ethernet, fiber optics, coaxial). Privacy issues are generally fewer compared to wireless, but still significant.
+* **Fiber Tapping**: Light leakage interception.
+* **High-Value Risks**: Targeting backbone networks (govt, finance).
 
-### Sub-groups based on standards:
+### c) DSL Broadband → *Standard: ITU-T G.992.x*
 
-#### a) **Ethernet (IEEE 802.3)**
+* **Copper Tapping**: Interception at junction boxes.
+* **ISP Monitoring**: Providers logging/inspecting traffic.
 
-* **Privacy Concern**: Packet sniffing if attackers gain physical or logical access to the network.
-* **Reason for Division**: IEEE 802.3 defines LAN standards → privacy issues relate to local data interception.
-* **Node Explanation**:
+### d) Cable Internet → *Standard: DOCSIS*
 
-  * *Data Leakage*: Any device connected to the LAN can capture unencrypted packets.
-  * *MAC Address Exposure*: Device identity can be tracked.
-  * *Traffic Analysis*: Even without reading content, traffic patterns reveal sensitive info.
+* **Shared Medium Leakage**: Neighbors intercepting traffic (older DOCSIS).
+* **ISP Surveillance**: Provider-level monitoring/profiling.
 
-#### b) **Fiber Optics**
+### e) Leased Lines/MPLS → *Carrier Standards*
 
-* **Privacy Concern**: Considered secure but still vulnerable to **fiber tapping**.
-* **Reason for Division**: Standardized under ITU-T G.65x series.
-* **Node Explanation**:
-
-  * *Fiber Tapping*: Intruders bend fiber to leak light.
-  * *High-Value Targets*: Used in backbone networks carrying sensitive data.
-
-#### c) **DSL / Cable Internet**
-
-* **Privacy Concern**: Shared medium (especially in cable) → risk of data interception.
-* **Reason for Division**: Follows ITU-T G.992.x (DSL) and DOCSIS (Cable) standards.
-* **Node Explanation**:
-
-  * *Shared Channel Leakage*: Neighboring users could intercept traffic.
-  * *ISP Surveillance*: Providers can monitor and log user traffic.
+* **Provider Dependence**: Trust in telecom carriers.
+* **Transit Interception**: Weak/missing encryption risks.
 
 ---
 
-## 2. **Wireless Privacy**
+## **2. Wireless Privacy**
 
-Wireless communication uses **radio waves** (Wi-Fi, cellular, Bluetooth, satellite). Privacy risks are **higher** due to open-air transmission.
+### a) Wi-Fi → *Standard: IEEE 802.11 (a/b/g/n/ac/ax/be)*
 
-### Sub-groups based on standards:
+* **WEP**: Weak encryption, easily cracked.
+* **WPA/WPA2**: Stronger, but brute-force possible.
+* **WPA3**: Latest, robust privacy with SAE authentication.
 
-#### a) **Wi-Fi (IEEE 802.11)**
+### b) Mobile Networks → *Standard: 3GPP (GSM, UMTS, LTE, 5G NR)*
 
-* **Privacy Concern**: Eavesdropping, man-in-the-middle attacks, weak encryption in old standards.
-* **Reason for Division**: IEEE 802.11 family governs Wi-Fi protocols.
-* **Node Explanation**:
+* **2G (GSM)**: Weak A5/1 encryption, IMSI leaks.
+* **3G (UMTS)**: Better, but fake towers still work.
+* **4G (LTE)**: IP encryption, but IMSI tracking risk.
+* **5G (NR)**: Stronger privacy with SUCI (concealed identity).
 
-  * *WEP (802.11b)*: Easily cracked.
-  * *WPA/WPA2 (802.11g/n/ac)*: Improved but vulnerable to brute force if weak passwords.
-  * *WPA3*: Stronger privacy with SAE authentication.
+### c) Bluetooth → *Standard: IEEE 802.15.1*
 
-#### b) **Cellular Networks (2G, 3G, 4G, 5G)**
+* **Bluejacking**: Spam messages.
+* **Bluesnarfing**: Data theft.
+* **MAC Tracking**: Device profiling.
 
-* **Privacy Concern**: Location tracking, interception by rogue base stations (IMSI catchers).
-* **Reason for Division**: 3GPP standards (GSM, UMTS, LTE, 5G NR).
-* **Node Explanation**:
+### d) Satellite Communication → *Standards: ETSI, ITU*
 
-  * *2G (GSM)*: Weak encryption (A5/1, A5/2). Easy to crack.
-  * *3G (UMTS)*: Stronger but still vulnerable to fake towers.
-  * *4G (LTE)*: Uses IP-based encryption but IMSI tracking possible.
-  * *5G*: Improved identity protection with SUCI (Subscription Concealed Identifier).
-
-#### c) **Bluetooth (IEEE 802.15.1)**
-
-* **Privacy Concern**: Device tracking and data leakage through pairing vulnerabilities.
-* **Reason for Division**: Defined under IEEE 802.15 WPAN standards.
-* **Node Explanation**:
-
-  * *Bluejacking*: Unauthorized messages sent.
-  * *Bluesnarfing*: Theft of data from devices.
-  * *Tracking*: Device’s MAC address leaks presence.
-
-#### d) **Satellite Communication**
-
-* **Privacy Concern**: Signals travel long distances, vulnerable to interception.
-* **Reason for Division**: Standards under ETSI and ITU.
-* **Node Explanation**:
-
-  * *Uplink/Downlink Interception*: Signals can be captured with proper equipment.
-  * *Encryption Dependence*: If encryption is weak, privacy collapses.
+* **Uplink/Downlink Interception**: Signals exposed over wide areas.
+* **Weak Encryption Risks**: If protocols are outdated or missing.
 
 ---
 
-## Why This Division?
+# **Tree Diagram in Markdown (Mermaid)**
 
-* **Wired vs Wireless**: Medium of communication changes exposure risk.
-* **Standard Division**: Each standard (Ethernet, Wi-Fi, GSM, etc.) has unique vulnerabilities and countermeasures defined by governing bodies like IEEE, ITU, or 3GPP.
-* **Detailed Nodes**: Each technology has specific **privacy threats** depending on how data travels and what protections are built-in.
+````markdown
+```mermaid
+mindmap
+  root((Privacy in Networking))
+    Wired Privacy
+      Ethernet (IEEE 802.3)
+        Data Leakage
+        MAC Address Exposure
+        Traffic Analysis
+      Fiber Optics (ITU-T G.65x)
+        Fiber Tapping
+        High-Value Risks
+      DSL Broadband (ITU-T G.992.x)
+        Copper Tapping
+        ISP Monitoring
+      Cable Internet (DOCSIS)
+        Shared Medium Leakage
+        ISP Surveillance
+      Leased Lines/MPLS (Carrier Standards)
+        Provider Dependence
+        Transit Interception
+    Wireless Privacy
+      Wi-Fi (IEEE 802.11)
+        WEP (Weak)
+        WPA/WPA2 (Stronger, Brute-force risks)
+        WPA3 (Strongest, SAE auth)
+      Mobile Networks (3GPP)
+        2G (Weak encryption, IMSI leaks)
+        3G (Fake towers risk)
+        4G (IMSI tracking, IP-based)
+        5G (SUCI protection)
+      Bluetooth (IEEE 802.15.1)
+        Bluejacking
+        Bluesnarfing
+        MAC Tracking
+      Satellite Communication (ETSI, ITU)
+        Uplink/Downlink Interception
+        Weak Encryption Risks
+````
 
 ---
 
-✅ In summary:
+✅ **Why this division works best**:  
+- **Technology-first** makes it easy to understand (Ethernet, Wi-Fi, Mobile, etc.).  
+- **Standards inside each** give technical credibility (IEEE, ITU-T, 3GPP, DOCSIS).  
+- **Nodes** show exact **privacy vulnerabilities**.  
 
-* **Wired Privacy** issues stem mostly from **physical access** and ISP monitoring.
-* **Wireless Privacy** is much riskier due to **open-air transmission**, leading to interception, location tracking, and device profiling.
+---
+
