@@ -1,202 +1,207 @@
 # **Wireless Privacy**
-# **Diagram Wireless Privacy**
+
+Wireless networks transmit over the **air**, which makes them inherently more exposed than wired since attackers don’t need physical access — only proximity (or in the case of satellite, the right equipment). Each wireless technology has its **own standards** and **privacy risks**.
+
+---
+# **Wireless Privacy — Mermaid Mindmap**
 
 ```mermaid
 mindmap
   root((Wireless Privacy))
     Wi-Fi (IEEE 802.11)
       Attacks
-        Eavesdropping
-        WEP Cracking
-        WPA/WPA2 Cracks (KRACK, Brute-force)
+        WEP Cracking (Weak RC4)
+        WPA/WPA2 Dictionary/KRACK
+        WPA3 Downgrade Attacks
         Evil Twin / Rogue AP
-        Deauthentication Attack
+        Deauth / Disassoc Floods
         MAC Tracking
       Mitigations
-        WPA3 + SAE
-        802.1X Enterprise Auth
-        Disable Open Wi-Fi
+        WPA3 with SAE
+        802.1X / EAP Auth
+        VPNs / TLS over Wi-Fi
         MAC Randomization
-        Wireless IDS/IPS
-        TLS/VPN Encryption
+        Rogue AP Monitoring
     Mobile Networks (3GPP)
       Attacks
-        2G: Weak A5/1, IMSI Catchers
-        3G: Downgrade Attacks
-        4G: IMSI Tracking, Paging, DoS
-        5G: Rogue Base Stations (Harder)
+        2G: Weak Encryption, IMSI Catchers
+        3G: Downgrade to 2G
+        4G: IMSI Tracking, SS7/Diameter Attacks
+        5G: Implementation Flaws, Signaling Risks
       Mitigations
-        Disable 2G Fallback
-        End-to-end Encrypted Apps
-        Carrier Anomaly Detection
-        Strong Cipher Enforcement
-        VPN over Mobile Data
-    Bluetooth (IEEE 802.15.1 / BLE)
+        Disable 2G
+        Use E2E Encrypted Apps
+        Secure SS7/Diameter with Firewalls
+        Baseband Firmware Updates
+    Bluetooth (IEEE 802.15.1)
       Attacks
         Bluejacking
         Bluesnarfing
         Bluebugging
-        Tracking (Static MACs)
-        Weak BLE Pairing
+        BLE Tracking
+        KNOB Attack
       Mitigations
-        Use Latest Bluetooth (>=5.0)
-        Disable When Not in Use
+        Disable when not in use
+        Latest Firmware / Secure Pairing
         MAC Randomization
-        Secure Pairing Modes
-        Firmware Updates
-    Satellite Communication (ETSI/ITU)
+        Trusted Device Pairing Only
+    Satellite (ETSI/ITU)
       Attacks
-        Signal Interception
-        Uplink Spoofing / Jamming
+        Downlink Interception
+        Uplink Interception
         Replay Attacks
         Weak / No Encryption
+        GPS Spoofing / Jamming
       Mitigations
         End-to-End Encryption
-        Anti-Jamming (FHSS, Beamforming)
-        Signal Authentication
-        Enforce Encrypted Sat-ISPs
-
+        AES Link Encryption
+        Anti-Spoofing GPS Receivers
+        Signal Monitoring
 ```
 
----
 
 ## **1. Wi-Fi → IEEE 802.11 (a/b/g/n/ac/ax/be)**
 
-**Reason for Division:** Defined by IEEE 802.11 standards. Widely used for home, enterprise, and public access.
+**Reason for Division:** Wi-Fi is the dominant wireless LAN technology, governed by the **IEEE 802.11 family** of standards.
 
-### Attack Techniques
+### Privacy Concerns & Attack Techniques
 
-* **Eavesdropping**
+* **WEP (802.11b):**
 
-  * Capture unencrypted traffic (open Wi-Fi).
-* **WEP cracking**
+  * Weak RC4 encryption with predictable IVs → easily cracked.
+* **WPA/WPA2 (802.11g/n/ac):**
 
-  * WEP (802.11b) keys can be brute-forced in minutes.
-* **WPA/WPA2 attacks**
+  * Pre-shared key brute force (dictionary attacks if weak passwords).
+  * KRACK (Key Reinstallation Attack) exploits handshake flaws.
+* **WPA3 (802.11ax/be):**
 
-  * Dictionary/brute-force against PSK (pre-shared key).
-  * KRACK attack against WPA2 handshake.
-* **Evil Twin AP / Rogue Hotspot**
+  * SAE handshake much stronger, but still susceptible to downgrade attacks in mixed environments.
+* **Eavesdropping:**
 
-  * Fake AP mimics real one → trick users into connecting.
-* **Deauthentication attack**
+  * If traffic is unencrypted/open Wi-Fi, anyone can capture it.
+* **Evil Twin / Rogue AP:**
 
-  * Force users off Wi-Fi to reconnect via attacker AP.
-* **MAC address tracking**
+  * Fake AP mimics a real one to capture credentials or inject malicious traffic.
+* **Deauthentication/Disassociation Attacks:**
 
-  * Devices leak probe requests containing MACs.
+  * Force clients off AP to capture handshake traffic.
+* **MAC Address Tracking:**
 
-### Mitigations
-
-* Use **WPA3 with SAE authentication** (strongest).
-* Enforce **enterprise Wi-Fi with 802.1X/EAP**.
-* Disable open Wi-Fi / captive portals without encryption.
-* Enable **MAC address randomization** on clients.
-* Wireless IDS/IPS to detect rogue APs and DoS.
-* Encrypt application data (TLS/HTTPS, VPN).
-
----
-
-## **2. Mobile Networks → 3GPP (GSM, UMTS, LTE, 5G NR)**
-
-**Reason for Division:** Governed by 3GPP standards (cellular). Used globally for mobile data & calls.
-
-### Attack Techniques
-
-* **2G (GSM)**
-
-  * Weak A5/1 and A5/2 ciphers (easy to crack).
-  * IMSI catchers (Stingrays) force downgrade to 2G → steal identity.
-
-* **3G (UMTS)**
-
-  * Stronger encryption (KASUMI), but still downgrade attacks possible.
-
-* **4G (LTE)**
-
-  * IMSI catchers still possible (via fake base stations).
-  * Location tracking via paging messages.
-  * DoS via signaling overload.
-
-* **5G (NR)**
-
-  * Better with **SUCI (Subscription Concealed Identifier)**.
-  * Still vulnerable to rogue base stations (though harder).
+  * Wi-Fi devices broadcast probe requests with their MAC, enabling tracking.
 
 ### Mitigations
 
-* Disable **2G fallback** on devices if possible.
-* Use **end-to-end encrypted apps** (Signal, WhatsApp, etc.).
-* Deploy **cellular firewalls & anomaly detection** for carriers.
-* Regulators to enforce **strong cipher use only**.
-* In enterprises: use **VPNs** over mobile data.
+* Use **WPA3 with SAE** where possible.
+* Strong, unique passphrases (avoid dictionary attacks).
+* Disable legacy WEP/WPA.
+* Deploy **802.1X/EAP with RADIUS** for enterprise networks.
+* Use **VPNs/TLS encryption** over Wi-Fi to protect beyond link layer.
+* Enable **MAC randomization** on clients.
+* Monitor for **rogue APs** and deauth floods.
 
 ---
 
-## **3. Bluetooth → IEEE 802.15.1 (Classic) & BLE (4.0/5.0)**
+## **2. Mobile Networks → 3GPP Standards (GSM, UMTS, LTE, 5G NR)**
 
-**Reason for Division:** Short-range wireless tech standardized under IEEE 802.15. Used for IoT, wearables, peripherals.
+**Reason for Division:** Cellular networks are standardized by **3GPP** across generations (2G → 5G). Each generation improved privacy, but vulnerabilities remain.
 
-### Attack Techniques
+### Privacy Concerns & Attack Techniques
 
-* **Bluejacking**
+* **2G GSM:**
 
-  * Sending unsolicited messages.
-* **Bluesnarfing**
+  * Weak A5/1, A5/2 ciphers crackable.
+  * No mutual authentication → fake base stations (IMSI catchers).
+* **3G UMTS:**
 
-  * Stealing contacts/files without user consent.
-* **Bluebugging**
+  * Mutual authentication added.
+  * Still vulnerable to rogue base stations that downgrade users to 2G.
+* **4G LTE:**
 
-  * Remote control of device (older devices).
-* **Tracking via MAC address**
+  * IP-based encryption, stronger than 3G.
+  * Still allows **IMSI tracking** in some cases.
+  * SS7/Diameter protocol vulnerabilities → location tracking, call/SMS interception.
+* **5G NR:**
 
-  * Static MACs allow persistent tracking.
-* **BLE vulnerabilities**
-
-  * Weak pairing modes allow MITM during key exchange.
+  * Uses **SUCI (Subscription Concealed Identifier)** instead of sending IMSI directly → stronger identity privacy.
+  * New vulnerabilities (e.g., implementation flaws, signaling storms).
 
 ### Mitigations
 
-* Use **latest Bluetooth versions (≥5.0)**.
-* Disable Bluetooth when not in use.
-* Use **randomized MAC addresses**.
-* Enforce **secure pairing modes (Numeric Comparison, Passkey)**.
-* Apply **firmware updates** for IoT devices.
+* **Force LTE/5G only** on devices (disable fallback to 2G where possible).
+* Use **end-to-end encryption (TLS, Signal, WhatsApp)** for messaging and calls.
+* Telecom operators must secure **SS7/Diameter interconnects** with firewalls and anomaly detection.
+* Regular updates to device baseband firmware.
 
 ---
 
-## **4. Satellite Communication → ETSI / ITU Standards**
+## **3. Bluetooth → IEEE 802.15.1**
 
-**Reason for Division:** Used for GPS, TV, military, and remote internet (e.g., VSAT, Starlink). Governed by ETSI/ITU standards.
+**Reason for Division:** Bluetooth is standardized under **IEEE 802.15.1** for short-range communication (IoT, peripherals, wearables).
 
-### Attack Techniques
+### Privacy Concerns & Attack Techniques
 
-* **Signal interception**
+* **Bluejacking:**
 
-  * Open broadcast channels (TV, GPS) can be intercepted.
-* **Uplink spoofing / jamming**
+  * Sending unsolicited messages to nearby devices.
+* **Bluesnarfing:**
 
-  * Attacker injects signals or jams communication.
-* **Replay attacks**
+  * Exploiting vulnerabilities in pairing to steal data (contacts, files).
+* **Bluebugging:**
 
-  * Captured signals replayed to manipulate receivers.
-* **Weak/no encryption**
+  * Gaining remote control over a device (calls, messages).
+* **Bluetooth Low Energy (BLE) Tracking:**
 
-  * Legacy systems often transmit unencrypted.
+  * Devices broadcast UUIDs/MAC addresses → can be used to track users in malls, airports, etc.
+* **Key Negotiation of Bluetooth (KNOB) Attack:**
+
+  * Forces devices to use weak encryption during pairing.
 
 ### Mitigations
 
-* Apply **end-to-end encryption** at network or app layer.
-* Use **anti-jamming technologies** (frequency hopping, beamforming).
-* Deploy **authentication for uplink signals**.
-* Regulatory enforcement for encryption in satellite ISPs.
+* Keep **Bluetooth off** when not in use.
+* Pair only with trusted devices.
+* Use latest **Bluetooth version (with patched firmware)**.
+* Enable **MAC address randomization** in BLE.
+* Enforce **Just Works/Numeric Comparison** authentication in BLE Secure Connections.
 
 ---
 
-✅ **Summary of Wireless Privacy**  
-- **Wi-Fi:** most common, privacy risks from weak encryption and rogue APs.  
-- **Mobile:** risks from legacy 2G and IMSI catchers; 5G improves but not perfect.  
-- **Bluetooth:** short range, but common in IoT; risks from device tracking & weak pairing.  
-- **Satellite:** huge coverage, but legacy systems often unencrypted and easy to intercept.  
+## **4. Satellite Communication → ITU/ETSI Standards**
+
+**Reason for Division:** Satellite systems (VSAT, GPS, broadband, military SATCOM) follow **ETSI and ITU standards**. Since signals travel through open space, interception is easier with the right equipment.
+
+### Privacy Concerns & Attack Techniques
+
+* **Downlink Interception:**
+
+  * Anyone with a large enough dish and demodulator can capture unencrypted satellite downlink traffic.
+* **Uplink Interception:**
+
+  * More difficult but possible with high-power equipment.
+* **Replay Attacks:**
+
+  * Capture and resend satellite communications.
+* **Weak/No Encryption:**
+
+  * Many older satellite systems send data unencrypted (TV feeds, maritime comms).
+* **GPS Spoofing/Jamming:**
+
+  * Broadcasting fake GPS signals to mislead receivers.
+
+### Mitigations
+
+* Use **end-to-end encryption** at the application or link layer.
+* Enforce **AES-based link encryption** in modern SATCOM equipment.
+* Deploy **anti-spoofing GPS receivers** that use authentication (military M-code, Galileo OSNMA).
+* Signal monitoring for abnormal interference.
 
 ---
+
+✅ **Summary:**  
+- **Wi-Fi (802.11):** Main risks from weak/legacy protocols, rogue APs, and unencrypted sessions.  
+- **Mobile (3GPP):** IMSI catchers, SS7 attacks, and downgrade exploits.  
+- **Bluetooth (802.15.1):** Short-range attacks like bluesnarfing and tracking.  
+- **Satellite (ITU/ETSI):** Open-air interception and weak encryption.  
+
+---
+
