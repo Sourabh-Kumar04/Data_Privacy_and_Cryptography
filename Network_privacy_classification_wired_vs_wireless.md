@@ -3,6 +3,41 @@
 Privacy in networks refers to **protecting user data, identity, and communication** from unauthorized access, misuse, or exposure. It varies depending on whether the communication medium is **wired** or **wireless**, and different **standards** define specific vulnerabilities and protections.
 
 ---
+
+```mermaid
+mindmap
+  root((Privacy in Networking))
+    Wired Privacy
+      Ethernet (IEEE 802.3)
+        Data Leakage
+        MAC Address Exposure
+        Traffic Analysis
+      Fiber Optics (ITU-T G.65x)
+        Fiber Tapping
+        High-Value Target Risks
+      DSL / Cable Internet (ITU-T G.992.x, DOCSIS)
+        Shared Channel Leakage
+        ISP Surveillance
+    Wireless Privacy
+      Wi-Fi (IEEE 802.11)
+        WEP (Weak, Crackable)
+        WPA/WPA2 (Improved, Brute-force risk)
+        WPA3 (Stronger protection)
+      Cellular Networks (3GPP Standards)
+        2G (Weak encryption, A5/1, A5/2 vulnerabilities)
+        3G (Stronger, Fake towers possible)
+        4G LTE (IP-based encryption, IMSI tracking risk)
+        5G (SUCI identity protection)
+      Bluetooth (IEEE 802.15.1)
+        Bluejacking
+        Bluesnarfing
+        Device Tracking (MAC exposure)
+      Satellite Communication (ETSI, ITU)
+        Uplink/Downlink Interception
+        Weak Encryption Risks
+```
+---
+
 # Privacy in Networking
 
 ## 1. Wired Privacy
